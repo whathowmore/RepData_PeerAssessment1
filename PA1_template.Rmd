@@ -10,12 +10,47 @@ knitr::opts_chunk$set(echo = TRUE)
 
 
 ## Loading and preprocessing the data
+First we should download the zipfile using the URL provided and read the CSV file after unzipping it.
 
+```{r}
+ActivityURL<- "https://d396qusza40orc.cloudfront.net/repdata%2Fdata%2Factivity.zip"
+download.file(ActivityURL, destfile = "./activity.zip", method = "curl")
+unzip("activity.zip")
+activityData<- read.csv("activity.csv")
+```
+
+The date coloumn is currently classed a factor, we can change it to the date class
+
+```{r}
+activityData$date<- as.Date(activityData$date,format= "%Y-%m-%d")
+```
 
 
 ## What is mean total number of steps taken per day?
 
+We can find out the total number of steps taken per a day and present them in a histogram, using the ggplot2 and dplyr packages.
 
+```{r histogram}
+library(ggplot2)
+library(dplyr)
+dailySteps<- activityData %>% group_by(date) %>% summarise(total= sum(steps, na.rm = TRUE))
+
+ggplot(dailySteps, aes(date, total, group= date))+
+  geom_col()+
+  labs(title = "Total Steps per a Day", x= "Date", y= "Total Steps")
+```
+
+We can then calculate the average total steps per day
+
+```{r}
+mean(dailySteps$total)
+```
+
+and the median total number of steps a day
+
+```{r}
+median(dailySteps$total)
+```
 
 ## What is the average daily activity pattern?
 
