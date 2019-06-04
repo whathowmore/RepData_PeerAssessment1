@@ -100,4 +100,22 @@ median(dailyStepsWithmean$total)
 We now see that the mean and median have converged, which is not suprising as we replaced a significant amount of missing values with their corresponding average value
 ## Are there differences in activity patterns between weekdays and weekends?
 
+To find out if theres a difference first we have to categorise the observations into **weekday** or **weekend**. We can do this using the weekdays function and creating a new factor variable for the data
 
+```{r weekday factor}
+weekdayOrEnd<- activityData %>% 
+mutate(day= if_else((weekdays(activityData$date)=="Saturday"| weekdays(activityData$date)== "Sunday"), "Weekend", "Weekday"))
+weekdayOrEnd$day<- as.factor(weekdayOrEnd$day)
+```
+
+Now we can plot two time series panels to compare the average steps per 5 minute interval on weekend and a weekday using the lattice plotting system
+
+```{r weekend/day time series plot}
+library(lattice)
+intervalStepsDay<- weekdayOrEnd %>% group_by(interval,day) %>% summarise(average= mean(steps))
+xyplot(average ~ interval| day,
+        data = intervalStepsDay,
+        type="l",
+        ylab = "number of steps",
+        layout=c(1,2))
+```
