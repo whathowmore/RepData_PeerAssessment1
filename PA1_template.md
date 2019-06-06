@@ -79,7 +79,7 @@ intervalSteps<- activityData %>% group_by(interval) %>% summarise(average= mean(
 with(intervalSteps, plot(interval, average, type = "l", xlab = "5 Minute Interval", ylab = "Average number of steps"))
 ```
 
-![](PA1_template_files/figure-html/time series plot-1.png)<!-- -->
+![](PA1_template_files/figure-html/timeseriesplot-1.png)<!-- -->
 
 And with this data we can find out which 5 minute interval has the **highest average** for a day
 
@@ -166,4 +166,4 @@ xyplot(average ~ interval| day,
         layout=c(1,2))
 ```
 
-![](PA1_template_files/figure-html/weekend/day time series plot-1.png)<!-- -->
+![](PA1_template_files/figure-html/weekdayplot-1.png)<!-- -->

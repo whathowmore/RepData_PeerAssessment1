@@ -59,7 +59,7 @@ median(dailySteps$total)
 
 We can plot the **average** number of steps for each 5 minute interval in a day by making a **time series plot**
 
-```{r time series plot}
+```{r timeseriesplot}
 intervalSteps<- activityData %>% group_by(interval) %>% summarise(average= mean(steps, na.rm = TRUE))
 with(intervalSteps, plot(interval, average, type = "l", xlab = "5 Minute Interval", ylab = "Average number of steps"))
 ```
@@ -110,7 +110,7 @@ weekdayOrEnd$day<- as.factor(weekdayOrEnd$day)
 
 Now we can plot two time series panels to compare the average steps per 5 minute interval on weekend and a weekday using the lattice plotting system
 
-```{r weekend/day time series plot}
+```{r weekdayplot}
 library(lattice)
 intervalStepsDay<- weekdayOrEnd %>% group_by(interval,day) %>% summarise(average= mean(steps))
 xyplot(average ~ interval| day,
